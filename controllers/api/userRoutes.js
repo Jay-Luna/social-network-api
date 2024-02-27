@@ -1,8 +1,13 @@
 const router = require('express').Router();
+const { User } = require('../../models');
 
-router.get('/', (req, res) => {
-    console.log('testing');
-    res.json('Successful');
+router.get('/', async (req, res) => {
+    try {
+        const users = await User.find();
+        res.json(users);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 });
 
 module.exports = router;

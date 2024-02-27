@@ -1,4 +1,4 @@
-const names = [
+const usernames = [
   'Aaran',
   'Aaren',
   'Aarez',
@@ -72,8 +72,7 @@ const names = [
 const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 // Gets a random full name
-const getRandomName = () =>
-  `${getRandomArrItem(names)} ${getRandomArrItem(names)}`;
+const getRandomUsername = () => `${getRandomArrItem(usernames)}`;
 
 // Export the functions for use in seed.js
-module.exports = { getRandomName };
+module.exports = { getRandomUsername };

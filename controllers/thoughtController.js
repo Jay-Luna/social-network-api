@@ -65,22 +65,20 @@ module.exports = {
             res.status(500).json(err);
         }
     },
-    //   // Delete a user and associated thoughts
-    //   async deleteUser(req, res) {
-    //     try {
-    //       const user = await User.findOneAndDelete({ _id: req.params.id });
+    // Delete a thought
+    async deleteThought(req, res) {
+        try {
+            const thought = await Thought.findOneAndDelete({ _id: req.params.id });
 
-    //       if (!user) {
-    //         return res.status(404).json({ message: 'No user with that ID' });
-    //       }
+            if (!thought) {
+                return res.status(404).json({ message: 'No thought with that ID' });
+            }
 
-    //       // BONUS: delete associated thoughts when deleted
-    //       //  await Application.deleteMany({ _id: { $in: user.applications } });
-    //       res.json({ message: 'User and associated thoughts deleted!' })
-    //     } catch (err) {
-    //       res.status(500).json(err);
-    //     }
-    //   },
+            res.json({ message: 'Thought deleted!' })
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
     //   // Add a new friend to a user's friend list
     //   async postFriend(req, res) {
     //     try {

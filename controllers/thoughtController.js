@@ -10,21 +10,21 @@ module.exports = {
             res.status(500).json(err);
         }
     },
-    //   // Get a single user
-    //   async getSingleUser(req, res) {
-    //     try {
-    //       const user = await User.findOne({ _id: req.params.id })
-    //         .select('-__v');
+    // Get a single thought
+    async getSingleThought(req, res) {
+        try {
+            const thought = await Thought.findOne({ _id: req.params.id })
+                .select('-__v');
 
-    //       if (!user) {
-    //         return res.status(404).json({ message: 'No user with that ID' });
-    //       }
+            if (!thought) {
+                return res.status(404).json({ message: 'No thought with that ID' });
+            }
 
-    //       res.json(user);
-    //     } catch (err) {
-    //       res.status(500).json(err);
-    //     }
-    //   },
+            res.json(thought);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
     // Create a new thought & add id to associated user thought array
     async createThought(req, res) {
         try {

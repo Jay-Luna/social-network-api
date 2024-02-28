@@ -37,10 +37,17 @@ module.exports = {
   // update a user
   async updateUser(req, res) {
     try {
-      const user = await User.findByIdAndUpdate({
-        id: req.params.id,
-        update: req.body
-      });
+      const user = await User.findOneAndUpdate(
+        { _id: req.params.id },
+        { $set: req.body },
+        // Sets to true so updated document is returned; Otherwise original document will be returned
+        { runValidators: true, new: true }
+      );
+
+      if (!user) {
+        return res.status(404).json({ message: 'No user with that ID' });
+      }
+
       res.json(user);
     } catch (err) {
       res.status(500).json(err);
@@ -55,8 +62,9 @@ module.exports = {
         return res.status(404).json({ message: 'No user with that ID' });
       }
 
+      // BONUS: delete associated thoughts when deleted
       //  await Application.deleteMany({ _id: { $in: user.applications } });
-      res.json({ message: 'User and associated apps deleted!' })
+      res.json({ message: 'User and associated thoughts deleted!' })
     } catch (err) {
       res.status(500).json(err);
     }

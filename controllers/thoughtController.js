@@ -46,25 +46,25 @@ module.exports = {
             res.status(500).json(err);
         }
     },
-    //   // Update a user
-    //   async updateUser(req, res) {
-    //     try {
-    //       const user = await User.findOneAndUpdate(
-    //         { _id: req.params.id },
-    //         { $set: req.body },
-    //         // Sets to true so updated document is returned; Otherwise original document will be returned
-    //         { runValidators:true, new: true }
-    //       );
+    // Update a thought
+    async updateThought(req, res) {
+        try {
+            const thought = await Thought.findOneAndUpdate(
+                { _id: req.params.id },
+                { $set: req.body },
+                // Sets to true so updated document is returned; Otherwise original document will be returned
+                { new: true }
+            );
 
-    //       if (!user) {
-    //         return res.status(404).json({ message: 'No user with that ID' });
-    //       }
+            if (!thought) {
+                return res.status(404).json({ message: 'No thought with that ID' });
+            }
 
-    //       res.json(user);
-    //     } catch (err) {
-    //       res.status(500).json(err);
-    //     }
-    //   },
+            res.json(thought);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
     //   // Delete a user and associated thoughts
     //   async deleteUser(req, res) {
     //     try {

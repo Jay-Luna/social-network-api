@@ -41,7 +41,7 @@ module.exports = {
         { _id: req.params.id },
         { $set: req.body },
         // Sets to true so updated document is returned; Otherwise original document will be returned
-        { new: true }
+        { runValidators:true, new: true }
       );
 
       if (!user) {

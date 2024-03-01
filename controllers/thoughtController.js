@@ -97,23 +97,22 @@ module.exports = {
             res.status(500).json(err);
         }
     },
-    //   // Remove a friend from a user's friend list
-    //   async deleteFriend(req, res) {
-    //     try {
-    //       const user = await User.findOneAndUpdate(
-    //         { _id: req.params.userId },
-    //         { $pull: { friends: req.params.friendId } },
-    //         // Sets to true so updated document is returned; Otherwise original document will be returned
-    //         { new: true }
-    //       );
+    // Remove a reaction and update thought reaction array field
+    async deleteReaction(req, res) {
+        try {
+            const thought = await Thought.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                { $pull: { reactions: req.params.reactionId } },
+                { new: true }
+            );
 
-    //       if (!user) {
-    //         return res.status(404).json({ message: 'No user with that ID' });
-    //       }
+            if (!thought) {
+                return res.status(404).json({ message: 'No thought with that ID' });
+            }
 
-    //       res.json(user);
-    //     } catch (err) {
-    //       res.status(500).json(err);
-    //     }
-    //   }
+            res.json(thought);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
 };

@@ -16,10 +16,12 @@ module.exports = {
       const user = await User.findOne({ _id: req.params.id })
         .select('-__v');
 
+      // if user not found, throw 404 error
       if (!user) {
-        return res.status(404).json({ message: 'No user with that ID' });
+        return res.status(404).json({
+          message: 'No user with that ID'
+        });
       }
-
       res.json(user);
     } catch (err) {
       res.status(500).json(err);
@@ -40,14 +42,17 @@ module.exports = {
       const user = await User.findOneAndUpdate(
         { _id: req.params.id },
         { $set: req.body },
+        // validators re-run to verify if email is in the correct format
         // Sets to true so updated document is returned; Otherwise original document will be returned
-        { runValidators:true, new: true }
+        { runValidators: true, new: true }
       );
 
+      // if user not found, throw 404 error
       if (!user) {
-        return res.status(404).json({ message: 'No user with that ID' });
+        return res.status(404).json({
+          message: 'No user with that ID'
+        });
       }
-
       res.json(user);
     } catch (err) {
       res.status(500).json(err);
@@ -58,8 +63,11 @@ module.exports = {
     try {
       const user = await User.findOneAndDelete({ _id: req.params.id });
 
+      // if user not found, throw 404 error
       if (!user) {
-        return res.status(404).json({ message: 'No user with that ID' });
+        return res.status(404).json({
+          message: 'No user with that ID'
+        });
       }
 
       // BONUS: delete associated thoughts when deleted
@@ -74,13 +82,17 @@ module.exports = {
     try {
       const user = await User.findOneAndUpdate(
         { _id: req.params.userId },
+        // adds new friendId to friends array of user
         { $addToSet: { friends: req.params.friendId } },
         // Sets to true so updated document is returned; Otherwise original document will be returned
         { new: true }
       );
 
+      // if user not found, throw 404 error
       if (!user) {
-        return res.status(404).json({ message: 'No user with that ID' });
+        return res.status(404).json({
+          message: 'No user with that ID'
+        });
       }
 
       res.json(user);
@@ -93,13 +105,17 @@ module.exports = {
     try {
       const user = await User.findOneAndUpdate(
         { _id: req.params.userId },
+        // removes friendId from friends array
         { $pull: { friends: req.params.friendId } },
         // Sets to true so updated document is returned; Otherwise original document will be returned
         { new: true }
       );
 
+      // if user not found, throw 404 error
       if (!user) {
-        return res.status(404).json({ message: 'No user with that ID' });
+        return res.status(404).json({
+          message: 'No user with that ID'
+        });
       }
 
       res.json(user);
